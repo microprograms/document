@@ -1,0 +1,4 @@
+使用maven-archetype-microapi-archetype新建maven项目
+
+命令行执行
+	mvn archetype:generate -DinteractiveMode=false -DarchetypeCatalog=remote -DarchetypeRepository="https://raw.githubusercontent.com/microprograms/maven-repo/master/repository" -DarchetypeGroupId=com.github.microprograms -DarchetypeArtifactId=maven-archetype-microapi-archetype -DarchetypeVersion=1.0.3 -DgroupId=com.github.microprograms -DartifactId=micro-api-sdk -Dversion=1.0.0
