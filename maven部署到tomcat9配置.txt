@@ -1,0 +1,52 @@
+# 配置apache-tomcat-9.0.0.M20/conf/Catalina/localhost/manager.xml
+
+# Each deployed webapp has a context.xml file that lives in $CATALINA_BASE/conf/[enginename]/[hostname] (conf/Catalina/localhost by default)
+# and has the same name as the webapp (manager.xml in this case). If no file is present, default values are used.
+# So, you need to create a file conf/Catalina/localhost/manager.xml and specify the rule you want to allow remote access. For example, the following content of manager.xml will allow access from all machines:
+
+<Context privileged="true" antiResourceLocking="false" docBase="${catalina.home}/webapps/manager">
+    <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="^.*$" />
+</Context>
+
+
+# 配置apache-tomcat-9.0.0.M20/conf/tomcat-users.xml
+
+<tomcat-users>
+    <role rolename="manager-gui" />
+    <role rolename="manager-script" />
+    <user username="admin" password="password" roles="manager-gui,manager-script" />
+</tomcat-users>
+
+# 配置pom.xml
+
+# 注意url设置为*/manager/text会被Text Manager interface (for scripts)执行, 此接口上传War包默认没有限制
+# 注意url设置为*/manager会被HTML Manager interface (for humans)执行, 此接口上传War包有默认最大50MB的限制
+
+<plugins>
+    <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+            <url>http://119.23.62.18:8080/manager/text</url>
+            <server>ForexrooAliyunTomcatServer</server>
+            <username>admin</username>
+            <password>password</password>
+        </configuration>
+    </plugin>
+</plugins>
+
+# deploy/re-deploy/un-deploy
+
+mvn tomcat7:deploy OR mvn tomcat7:redeploy OR mvn tomcat7:undeploy
+
+Tried this on (Both Ubuntu and Windows 8/10):
+* Jdk 7 & Tomcat 7
+* Jdk 7 & Tomcat 8
+* Jdk 8 & Tomcat 7
+* Jdk 8 & Tomcat 8
+
+Tested on Both Jdk 7/8 & Tomcat 7/8. (Works with Tomcat 8.5 Also, will test Tomcat 9 soon)
+
+Note:
+Tomcat manager should be running or properly setup, before you can use it with maven.

@@ -1,0 +1,13 @@
+mac下清除git密码（osxkeychain）
+
+# 查看密码存储器是否为osxkeychain
+
+$ git config credential.helper
+
+
+# 清除osxkeychain保存的密码
+
+$ git credential-osxkeychain erase
+host=git.coding.net
+protocol=https
+[按回车]
