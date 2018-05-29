@@ -1,0 +1,7 @@
+ssh免密登录
+
+1、在本机生成密匙对（命令行ssh-keygen -t rsa）
+
+2、复制公钥到目标机（命令行scp ~/.ssh/id_rsa.pub root@101.201.181.132:/root/.ssh/authorized_keys）
+
+3、成功（命令行ssh root@101.201.181.132）
