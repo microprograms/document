@@ -1,0 +1,25 @@
+主流数字证书都有哪些格式？
+
+一般来说，主流的Web服务软件，通常都基于OpenSSL和Java两种基础密码库。
+
+Tomcat、Weblogic、JBoss等Web服务软件，一般使用Java提供的密码库。通过Java Development Kit （JDK）工具包中的Keytool工具，生成Java Keystore（JKS）格式的证书文件。
+Apache、Nginx等Web服务软件，一般使用OpenSSL工具提供的密码库，生成PEM、KEY、CRT等格式的证书文件。
+IBM的Web服务产品，如Websphere、IBM Http Server（IHS）等，一般使用IBM产品自带的iKeyman工具，生成KDB格式的证书文件。
+微软Windows Server中的Internet Information Services（IIS）服务，使用Windows自带的证书库生成PFX格式的证书文件。
+
+如何判断证书文件是文本格式还是二进制格式？
+
+您可以使用以下方法简单区分带有后缀扩展名的证书文件：
+*.DER或*.CER文件： 这样的证书文件是二进制格式，只含有证书信息，不包含私钥。
+*.CRT文件： 这样的证书文件可以是二进制格式，也可以是文本格式，一般均为文本格式，功能与 *.DER及*.CER证书文件相同。
+*.PEM文件： 这样的证书文件一般是文本格式，可以存放证书或私钥，或者两者都包含。 *.PEM 文件如果只包含私钥，一般用*.KEY文件代替。
+*.PFX或*.P12文件： 这样的证书文件是二进制格式，同时包含证书和私钥，且一般有密码保护。
+您也可以使用记事本直接打开证书文件。如果显示的是规则的数字字母，例如：
+
+—–BEGIN CERTIFICATE—–
+MIIE5zCCA8+gAwIBAgIQN+whYc2BgzAogau0dc3PtzANBgkqh......
+—–END CERTIFICATE—–
+
+那么，该证书文件是文本格式的。
+如果存在——BEGIN CERTIFICATE——，则说明这是一个证书文件。
+如果存在—–BEGIN RSA PRIVATE KEY—–，则说明这是一个私钥文件。

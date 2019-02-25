@@ -1,0 +1,24 @@
+【将PFX格式证书转换为JKS格式】
+
+您可以使用JDK中自带的Keytool工具，将PFX格式证书文件转换成JKS格式。例如，您可以执行以下命令将 server.pfx证书文件转换成 server.jks证书文件：
+
+keytool -importkeystore -srckeystore D:\server.pfx -destkeystore D:\server.jks -srcstoretype PKCS12 -deststoretype JKS
+
+【将JKS格式证书转换成PFX格式】
+
+您可以使用JDK中自带的Keytool工具，将JKS格式证书文件转换成PFX格式。例如，您可以执行以下命令将 server.jks证书文件转换成 server.pfx证书文件：
+
+keytool -importkeystore -srckeystore D:\server.jks -destkeystore D:\server.pfx -srcstoretype JKS -deststoretype PKCS12
+
+【将PEM/KEY/CRT格式证书转换为PFX格式】
+
+您可以使用 OpenSSL工具，将KEY格式密钥文件和CRT格式公钥文件转换成PFX格式证书文件。例如，将您的KEY格式密钥文件（server.key）和CRT格式公钥文件（server.crt）拷贝至OpenSSL工具安装目录，使用OpenSSL工具执行以下命令将证书转换成 server.pfx证书文件：
+
+openssl pkcs12 -export -out server.pfx -inkey server.key -in server.crt
+
+【将PFX转换为PEM/KEY/CRT】
+您可以使用 OpenSSL工具，将PFX格式证书文件转化为KEY格式密钥文件和CRT格式公钥文件。例如，将您的PFX格式证书文件拷贝至OpenSSL安装目录，使用OpenSSL工具执行以下命令将证书转换成server.pem证书文件KEY格式密钥文件（server.key）和CRT格式公钥文件（server.crt）：
+
+openssl pkcs12 -in server.pfx -nodes -out server.pem
+openssl rsa -in server.pem -out server.key
+openssl x509 -in server.pem -out server.crt
