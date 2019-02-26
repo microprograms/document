@@ -1,0 +1,112 @@
+CentOS 7.6 64位 装机软件
+
+安装 epel 源：
+ yum install epel-release
+
+安装 aria2 ：
+ yum install aria2 -y
+
+安装 nodejs ：
+ aria2c https://nodejs.org/dist/v10.15.1/node-v10.15.1-linux-x64.tar.xz
+
+ mkdir -p /usr/local/lib/nodejs
+
+ tar -xJvf node-v10.15.1-linux-x64.tar.xz -C /usr/local/lib/nodejs
+
+ vi ~/.profile
+
+  export PATH=/usr/local/lib/nodejs/node-v10.15.1-linux-x64/bin:$PATH
+
+ source ~/.profile
+
+ sudo ln -s /usr/local/lib/nodejs/node-v10.15.1-linux-x64/bin/node /usr/bin/node
+
+ sudo ln -s /usr/local/lib/nodejs/node-v10.15.1-linux-x64/bin/npm /usr/bin/npm
+
+ sudo ln -s /usr/local/lib/nodejs/node-v10.15.1-linux-x64/bin/npx /usr/bin/npx
+
+安装 git ：
+ yum install git -y
+ 
+安装 scratch-gui ：
+ git clone https://github.com/ziran-ink/scratch-gui.git
+ 
+ cd scratch-gui
+
+ node -v # v10.15.0
+
+ npm install -g yarn
+ 
+ npm install -g webpack
+ 
+ npm install -g webpack-dev-server
+
+ yarn install
+
+ webpack-dev-server --https # 打开 https://127.0.0.1:8601/
+
+安装 scratch-vm ：
+ git clone https://github.com/ziran-ink/scratch-vm.git
+
+ cd scratch-vm
+
+ yarn install
+
+ yarn link
+
+ yarn add uglifyjs-webpack-plugin
+
+ yarn run watch
+
+ # 新开一个shell
+
+ cd scratch-gui
+
+ yarn link scratch-vm
+
+添加 swap 分区：
+ dd if=/dev/zero of=/var/swapfile bs=3M count=1024
+
+ mkswap /var/swapfile
+
+ chmod -R 0600 /var/swapfile
+
+ swapon /var/swapfile
+ 
+ echo  "/var/swapfile swap swap defaults 0 0" >> /etc/fstab
+
+删除 swap 分区：
+ swapoff /var/swapfile
+
+ rm -rf /var/swapfile
+
+安装 nginx :
+ yum install nginx -y
+
+启动 nginx :
+ service nginx start
+
+卸载 nginx :
+ yum remove nginx
+
+git clone 大型项目失败：
+ git config http.postBuffer 524288000
+
+压缩备份：
+ dd if=/path/to/my/file | gzip >/path/to/image.gz
+
+恢复备份：
+ gzip -dc /path/to/image.gz | dd of=/path/to/my/file
+
+安装 zip unzip ：
+ yum install zip unzip -y
+
+压缩文件夹：
+ zip -r scratch-gui-20190226-1406.backup.zip ./scratch-gui/*
+
+安装 java ：
+ yum install java
+
+部署 javase app 到服务器：
+ scp -r ~/ziran/java/ziran-api-server/ root@ziran.ink:/root/ziran/ziran-api-server/
+
